@@ -29,7 +29,7 @@ async def root():
     return {
         "service": "PDF Logo Replacer API",
         "status": "running",
-        "version": "1.0.4",
+        "version": "1.0.5",
         "endpoints": {
             "/replace-logos": "POST - Replace logos in PDF",
             "/health": "GET - Health check"
@@ -52,7 +52,7 @@ async def replace_logos(
     Args:
         pdf_file: PDF file to process
         detections: JSON array of logo locations [{page, x, y, width, height}]
-                   y is from bottom-left corner
+                   y is already from top (after FLIP in extension)
         replace_logo: Base64 encoded replacement logo image
     
     Returns:
@@ -84,13 +84,13 @@ async def replace_logos(
         for idx, det in enumerate(detections_list):
             page_num = det['page'] - 1  # 0-based index
             x = det['x']
-            y = det['y']
+            y = det['y']  # Already from top (extension did FLIP)
             width = det.get('width', replace_width)
             height = det.get('height', replace_height)
             
             print(f"\n[Logo {idx+1}/{len(detections_list)}]")
             print(f"  Page: {page_num + 1}")
-            print(f"  📥 Received: x={x}, y={y} (from bottom), w={width}, h={height}")
+            print(f"  📥 Received: x={x}, y={y} (from top), w={width}, h={height}")
             
             page = doc[page_num]
             page_width = page.rect.width
@@ -98,18 +98,12 @@ async def replace_logos(
             
             print(f"  📐 PDF page: {page_width:.1f}x{page_height:.1f}")
             
-            # CRITICAL FIX: PyMuPDF Rect uses (x0, y0, x1, y1) where y0 is from TOP!
-            # Extension sends y from bottom, so we need to flip it!
-            y_from_top = page_height - y - height
-            
+            # NO FLIP - Extension already sent y from top!
             x0 = x
-            y0 = y_from_top  # Convert from bottom to top!
+            y0 = y  # Use directly - already from top!
             x1 = x + width
-            y1 = y_from_top + height
+            y1 = y + height
             
-            print(f"  🔄 Convert Y from bottom to top:")
-            print(f"     Received: y={y} (from bottom)")
-            print(f"     Converted: y={y_from_top:.1f} (from top)")
             print(f"  📍 Rectangle: ({x0:.1f}, {y0:.1f}, {x1:.1f}, {y1:.1f})")
             
             rect = fitz.Rect(x0, y0, x1, y1)
