@@ -1,150 +1,169 @@
-config.js:9 PDF.js worker configured (local)
-editor.js:91 PDF Editor Pro v3.0 - Initializing...
-config.js:14 Libraries check: Object
-opencv.js:21  Uncaught 
- ✅ OpenCV.js loaded successfully
- ⚠️ No clients in chrome.storage, attempting restore...
- 📝 No localStorage backup found
- 
-============================================================
- 🔍 STORAGE DIAGNOSTIC
- ============================================================
- 📦 No session state found
- Editor initialized successfully
- 📦 chrome.storage.local:
-    - Total keys: 0
-    - Client keys: 0
-    - Clients: NONE
-    - API Keys: ❌ NO
- 
-💾 localStorage:
-    - Clients backup: ❌ NO
-    - API Keys backup: ❌ NO
- 
-⚠️ WARNING: No backups found! Data will be lost on refresh.
- ============================================================
+"""
+PDF Logo Replacement Backend - Cloud Run Deployment
+Uses PyMuPDF for pixel-perfect logo replacement
+"""
 
- ✅ Page 1 rendered successfully
- PDF loaded: 2 pages
- ✅ Page 1 rendered successfully
- Zoom: 90%
- Zoom: 70%
- Zoom: 60%
- ✅ Page 1 rendered successfully
- Zoom: 60%
- ✅ API Keys saved
- 💾 API Keys backed up to localStorage
- ✅ API Keys saved
- ⚠️ No clients in chrome.storage, attempting restore...
- 📝 No localStorage backup found
- ⚠️ No clients in chrome.storage, attempting restore from localStorage...
- ❌ No localStorage backup found
- 💾 Auto-saving ELOP:
-clientModal.js:829    searchLogo: NO
-clientModal.js:830    replaceLogo: NO
-storage.js:17 Saved settings for: ELOP
-clientModal.js:889 💾 Backed up to localStorage: ELOP
-clientModal.js:839 ✅ Auto-saved: ELOP
-clientModal.js:483 📷 Logo upload started: type=search
-clientModal.js:490 📷 File selected: Elbit System.png, size: 41656 bytes
-clientModal.js:512 📄 FileReader started...
-clientModal.js:494 ✅ File read successfully, length: 55566
-clientModal.js:519 🖼️ Displaying logo: type=search, data length=55566
-clientModal.js:521 🎯 Preview element ID: search-logo-preview
-clientModal.js:536 ✅ Logo displayed in preview
-clientModal.js:828 💾 Auto-saving ELOP:
-clientModal.js:829    searchLogo: YES
-clientModal.js:830    replaceLogo: NO
-storage.js:17 Saved settings for: ELOP
-clientModal.js:889 💾 Backed up to localStorage: ELOP
-clientModal.js:839 ✅ Auto-saved: ELOP
-clientModal.js:483 📷 Logo upload started: type=replace
-clientModal.js:490 📷 File selected: dagesh logo.png, size: 2453 bytes
-clientModal.js:512 📄 FileReader started...
-clientModal.js:494 ✅ File read successfully, length: 3294
-clientModal.js:519 🖼️ Displaying logo: type=replace, data length=3294
-clientModal.js:521 🎯 Preview element ID: replace-logo-preview
-clientModal.js:536 ✅ Logo displayed in preview
-clientModal.js:828 💾 Auto-saving ELOP:
-clientModal.js:829    searchLogo: YES
-clientModal.js:830    replaceLogo: YES
-storage.js:17 Saved settings for: ELOP
-clientModal.js:889 💾 Backed up to localStorage: ELOP
-clientModal.js:839 ✅ Auto-saved: ELOP
-clientModal.js:626 💾 Saving client: ELOP
-clientModal.js:627    - searchLogo: YES (data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAkQA...)
-clientModal.js:628    - replaceLogo: YES (data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQA...)
-storage.js:17 Saved settings for: ELOP
-clientModal.js:889 💾 Backed up to localStorage: ELOP
-clientModal.js:697 ✅ Auto-exported 1 clients to JSON backup
-clientModal.js:645 ✅ Saved client: ELOP
-editor.js:873 ✅ Client selected in editor: ELOP
-clientModal.js:379 ✅ Client selected: ELOP
-clientModal.js:828 💾 Auto-saving ELOP:
-clientModal.js:829    searchLogo: YES
-clientModal.js:830    replaceLogo: YES
-storage.js:17 Saved settings for: ELOP
-clientModal.js:889 💾 Backed up to localStorage: ELOP
-clientModal.js:839 ✅ Auto-saved: ELOP
-clientModal.js:266 💾 Auto-saved on modal close
-editor.js:808 🚀 Starting AI Vision + PyMuPDF Backend logo replacement
-simpleAIDetection.js:10 🚀 Starting Simple AI Detection + Railway Backend
-simpleAIDetection.js:34 
-📄 Processing page 1/2...
-simpleAIDetection.js:230    Normalizing coordinates: 1087x768 → 4766x3366
-simpleAIDetection.js:69 📊 Coordinate conversion for page 1:
-simpleAIDetection.js:70    Image: 4766x3366 (scale: 2)
-simpleAIDetection.js:71    PDF: 2383x1683
-simpleAIDetection.js:72    AI detection: x=4033.78104875805, y=2980.3125, w=526.1453541858326, h=175.3125
-simpleAIDetection.js:81 🔄 FLIP Y: 105 (from bottom) → 1490 (from top)
-simpleAIDetection.js:83    → PDF coords: x=2017, y=1490, w=263, h=88
-simpleAIDetection.js:84    → Bottom-right corner: x=2280, y=1578
-simpleAIDetection.js:97 ✅ Found logo on page 1: Object
-simpleAIDetection.js:34 
-📄 Processing page 2/2...
-pdf.worker.min.js:22 Warning: Skipping command rg: expected 3 args, but received 1 args.
-pdf.worker.min.js:22 Warning: Unknown command "R2L".
-pdf.worker.min.js:22 Warning: Skipping command rg: expected 3 args, but received 2 args.
-pdf.worker.min.js:22 Warning: Unknown command "R2L".
-pdf.worker.min.js:22 Warning: Skipping command rg: expected 3 args, but received 1 args.
-pdf.worker.min.js:22 Warning: Unknown command "R2L".
-pdf.worker.min.js:22 Warning: Skipping command rg: expected 3 args, but received 2 args.
-pdf.worker.min.js:22 Warning: Unknown command "R2L".
-simpleAIDetection.js:106 ⚠️ No logo found on page 2
-railwayBackend.js:43 🚀 Sending to Railway backend...
-railwayBackend.js:44    Detections: 1
-railwayBackend.js:45    PDF size: NaNKB
-railwayBackend.js:61 📤 Uploading to Railway...
-railwayBackend.js:77 📥 Receiving modified PDF...
-railwayBackend.js:82 ✅ Railway backend complete!
-railwayBackend.js:83    Output size: 191KB
-editor.js:384 ✅ Page 1 rendered successfully
-editor.js:831 ✅ Logo replacement complete!
-editor.js:384 ✅ Page 1 rendered successfully
-editor.js:415 Zoom: 50%
-editor.js:415 Zoom: 30%
-editor.js:384 ✅ Page 1 rendered successfully
-editor.js:415 Zoom: 30%
-editor.js:384 ✅ Page 1 rendered successfully
-editor.js:415 Zoom: 40%
-editor.js:384 ✅ Page 1 rendered successfully
-editor.js:415 Zoom: 50%
-editor.js:384 ✅ Page 1 rendered successfully
-editor.js:415 Zoom: 60%
-editor.js:384 ✅ Page 1 rendered successfully
-editor.js:415 Zoom: 70%
-editor.js:384 ✅ Page 1 rendered successfully
-editor.js:415 Zoom: 60%
-editor.js:384 ✅ Page 1 rendered successfully
-editor.js:415 Zoom: 50%
-editor.js:384 ✅ Page 1 rendered successfully
-editor.js:415 Zoom: 40%
-editor.js:384 ✅ Page 1 rendered successfully
-editor.js:415 Zoom: 30%
-editor.js:384 ✅ Page 1 rendered successfully
-editor.js:415 Zoom: 20%
-[NEW] Explain Console errors by using Copilot in Edge: click
-         
-         to explain an error. 
-        Learn more
-        Don't show again
+from fastapi import FastAPI, File, UploadFile, Form, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import Response
+import fitz  # PyMuPDF
+import io
+import base64
+from PIL import Image
+import json
+from typing import List
+
+app = FastAPI(title="PDF Logo Replacer API")
+
+# Enable CORS for Chrome Extension
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins (Chrome Extension)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/")
+async def root():
+    return {
+        "service": "PDF Logo Replacer API",
+        "status": "running",
+        "version": "1.0.1",
+        "endpoints": {
+            "/replace-logos": "POST - Replace logos in PDF",
+            "/health": "GET - Health check"
+        }
+    }
+
+@app.get("/health")
+async def health():
+    return {"status": "healthy", "service": "pdf-logo-replacer"}
+
+@app.post("/replace-logos")
+async def replace_logos(
+    pdf_file: UploadFile = File(...),
+    detections: str = Form(...),
+    replace_logo: str = Form(...)
+):
+    """
+    Replace logos in PDF using PyMuPDF insert_image()
+    
+    Args:
+        pdf_file: PDF file to process
+        detections: JSON array of logo locations [{page, x, y, width, height}]
+                   x, y are top-left corner (from top of page)
+        replace_logo: Base64 encoded replacement logo image
+    
+    Returns:
+        Modified PDF file
+    """
+    try:
+        print(f"📄 Received PDF: {pdf_file.filename}")
+        
+        # Parse detections
+        detections_list = json.loads(detections)
+        print(f"🔍 Processing {len(detections_list)} logo(s)")
+        
+        # Decode replacement logo
+        if replace_logo.startswith('data:image'):
+            replace_logo = replace_logo.split(',')[1]
+        replace_logo_bytes = base64.b64decode(replace_logo)
+        
+        # Load replacement logo with PIL to get dimensions
+        replace_img = Image.open(io.BytesIO(replace_logo_bytes))
+        replace_width, replace_height = replace_img.size
+        print(f"🎨 Replacement logo: {replace_width}x{replace_height}")
+        
+        # Read PDF
+        pdf_bytes = await pdf_file.read()
+        doc = fitz.open(stream=pdf_bytes, filetype="pdf")
+        print(f"📖 PDF opened: {doc.page_count} pages")
+        
+        # Process each detection
+        for idx, det in enumerate(detections_list):
+            page_num = det['page'] - 1  # 0-based index
+            x = det['x']
+            y = det['y']
+            width = det.get('width', replace_width)
+            height = det.get('height', replace_height)
+            
+            print(f"\n[Logo {idx+1}/{len(detections_list)}]")
+            print(f"  Page: {page_num + 1}")
+            print(f"  Received coords (from Extension): x={x}, y={y}, w={width}, h={height}")
+            
+            page = doc[page_num]
+            page_width = page.rect.width
+            page_height = page.rect.height
+            
+            print(f"  📐 PDF page size: {page_width:.1f}x{page_height:.1f}")
+            
+            # FIX 1: Preserve aspect ratio of replacement logo
+            logo_aspect = replace_width / replace_height
+            target_aspect = width / height if height > 0 else logo_aspect
+            
+            if abs(logo_aspect - target_aspect) > 0.1:
+                # Adjust dimensions to match logo aspect ratio
+                # Keep width, adjust height
+                height = width / logo_aspect
+                print(f"  📏 Adjusted height to preserve aspect ratio: {height:.1f}")
+            
+            # FIX 2: Extension sends Y from top, but we need to convert to bottom-left corner
+            # PyMuPDF uses (x0, y0) as BOTTOM-LEFT corner of the rectangle
+            x0 = x
+            y0 = page_height - y - height  # Convert top-left to bottom-left
+            x1 = x + width
+            y1 = page_height - y  # Bottom of rect
+            
+            print(f"  🔄 Coordinate conversion:")
+            print(f"     Extension sent: top-left corner = ({x:.1f}, {y:.1f})")
+            print(f"     PyMuPDF needs: bottom-left corner = ({x0:.1f}, {y0:.1f})")
+            print(f"     Rectangle: ({x0:.1f}, {y0:.1f}, {x1:.1f}, {y1:.1f})")
+            
+            rect = fitz.Rect(x0, y0, x1, y1)
+            
+            # Insert logo
+            try:
+                page.insert_image(
+                    rect,
+                    stream=replace_logo_bytes,
+                    keep_proportion=True,
+                    overlay=True
+                )
+                print(f"  ✅ Logo inserted successfully!")
+                    
+            except Exception as img_error:
+                print(f"  ❌ Error inserting image: {img_error}")
+                raise
+        
+        # Save modified PDF
+        output_bytes = doc.tobytes(
+            garbage=4,  # Maximum compression
+            deflate=True,
+            clean=True
+        )
+        doc.close()
+        
+        print(f"\n✅ PDF processing complete!")
+        print(f"📦 Output size: {len(output_bytes)} bytes")
+        
+        # Return modified PDF
+        return Response(
+            content=output_bytes,
+            media_type="application/pdf",
+            headers={
+                "Content-Disposition": f"attachment; filename=modified_{pdf_file.filename}"
+            }
+        )
+        
+    except json.JSONDecodeError as e:
+        raise HTTPException(status_code=400, detail=f"Invalid detections JSON: {str(e)}")
+    except Exception as e:
+        print(f"❌ Error: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+if __name__ == "__main__":
+    import uvicorn
+    import os
+    port = int(os.environ.get("PORT", 8080))
+    uvicorn.run(app, host="0.0.0.0", port=port)
