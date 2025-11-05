@@ -29,7 +29,7 @@ async def root():
     return {
         "service": "PDF Logo Replacer API",
         "status": "running",
-        "version": "1.0.1",
+        "version": "1.0.3",
         "endpoints": {
             "/replace-logos": "POST - Replace logos in PDF",
             "/health": "GET - Health check"
@@ -52,7 +52,7 @@ async def replace_logos(
     Args:
         pdf_file: PDF file to process
         detections: JSON array of logo locations [{page, x, y, width, height}]
-                   x, y are top-left corner (from top of page)
+                   x, y from bottom-left corner
         replace_logo: Base64 encoded replacement logo image
     
     Returns:
@@ -73,7 +73,7 @@ async def replace_logos(
         # Load replacement logo with PIL to get dimensions
         replace_img = Image.open(io.BytesIO(replace_logo_bytes))
         replace_width, replace_height = replace_img.size
-        print(f"🎨 Replacement logo: {replace_width}x{replace_height}")
+        print(f"🎨 Replacement logo original: {replace_width}x{replace_height}")
         
         # Read PDF
         pdf_bytes = await pdf_file.read()
@@ -90,47 +90,37 @@ async def replace_logos(
             
             print(f"\n[Logo {idx+1}/{len(detections_list)}]")
             print(f"  Page: {page_num + 1}")
-            print(f"  Received coords (from Extension): x={x}, y={y}, w={width}, h={height}")
+            print(f"  📥 Received: x={x}, y={y}, w={width}, h={height}")
             
             page = doc[page_num]
             page_width = page.rect.width
             page_height = page.rect.height
             
-            print(f"  📐 PDF page size: {page_width:.1f}x{page_height:.1f}")
+            print(f"  📐 PDF page: {page_width:.1f}x{page_height:.1f}")
             
-            # FIX 1: Preserve aspect ratio of replacement logo
-            logo_aspect = replace_width / replace_height
-            target_aspect = width / height if height > 0 else logo_aspect
+            # FIX: Use exact dimensions from Extension - NO aspect ratio adjustment!
+            # Extension already calculated correct size
+            print(f"  ✅ Using exact dimensions from Extension")
             
-            if abs(logo_aspect - target_aspect) > 0.1:
-                # Adjust dimensions to match logo aspect ratio
-                # Keep width, adjust height
-                height = width / logo_aspect
-                print(f"  📏 Adjusted height to preserve aspect ratio: {height:.1f}")
-            
-            # FIX 2: Extension sends Y from top, but we need to convert to bottom-left corner
-            # PyMuPDF uses (x0, y0) as BOTTOM-LEFT corner of the rectangle
+            # Create rectangle (PyMuPDF uses bottom-left origin)
             x0 = x
-            y0 = page_height - y - height  # Convert top-left to bottom-left
+            y0 = y
             x1 = x + width
-            y1 = page_height - y  # Bottom of rect
+            y1 = y + height
             
-            print(f"  🔄 Coordinate conversion:")
-            print(f"     Extension sent: top-left corner = ({x:.1f}, {y:.1f})")
-            print(f"     PyMuPDF needs: bottom-left corner = ({x0:.1f}, {y0:.1f})")
-            print(f"     Rectangle: ({x0:.1f}, {y0:.1f}, {x1:.1f}, {y1:.1f})")
+            print(f"  📍 Rectangle: ({x0:.1f}, {y0:.1f}, {x1:.1f}, {y1:.1f})")
             
             rect = fitz.Rect(x0, y0, x1, y1)
             
-            # Insert logo
+            # Insert logo with keep_proportion=False to use EXACT dimensions
             try:
                 page.insert_image(
                     rect,
                     stream=replace_logo_bytes,
-                    keep_proportion=True,
+                    keep_proportion=False,  # Use EXACT rect dimensions!
                     overlay=True
                 )
-                print(f"  ✅ Logo inserted successfully!")
+                print(f"  ✅ Logo inserted with exact dimensions!")
                     
             except Exception as img_error:
                 print(f"  ❌ Error inserting image: {img_error}")
