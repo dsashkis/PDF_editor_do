@@ -29,7 +29,7 @@ async def root():
     return {
         "service": "PDF Logo Replacer API",
         "status": "running",
-        "version": "1.0.3",
+        "version": "1.0.4",
         "endpoints": {
             "/replace-logos": "POST - Replace logos in PDF",
             "/health": "GET - Health check"
@@ -52,7 +52,7 @@ async def replace_logos(
     Args:
         pdf_file: PDF file to process
         detections: JSON array of logo locations [{page, x, y, width, height}]
-                   x, y from bottom-left corner
+                   y is from bottom-left corner
         replace_logo: Base64 encoded replacement logo image
     
     Returns:
@@ -73,7 +73,7 @@ async def replace_logos(
         # Load replacement logo with PIL to get dimensions
         replace_img = Image.open(io.BytesIO(replace_logo_bytes))
         replace_width, replace_height = replace_img.size
-        print(f"🎨 Replacement logo original: {replace_width}x{replace_height}")
+        print(f"🎨 Replacement logo: {replace_width}x{replace_height}")
         
         # Read PDF
         pdf_bytes = await pdf_file.read()
@@ -90,7 +90,7 @@ async def replace_logos(
             
             print(f"\n[Logo {idx+1}/{len(detections_list)}]")
             print(f"  Page: {page_num + 1}")
-            print(f"  📥 Received: x={x}, y={y}, w={width}, h={height}")
+            print(f"  📥 Received: x={x}, y={y} (from bottom), w={width}, h={height}")
             
             page = doc[page_num]
             page_width = page.rect.width
@@ -98,29 +98,31 @@ async def replace_logos(
             
             print(f"  📐 PDF page: {page_width:.1f}x{page_height:.1f}")
             
-            # FIX: Use exact dimensions from Extension - NO aspect ratio adjustment!
-            # Extension already calculated correct size
-            print(f"  ✅ Using exact dimensions from Extension")
+            # CRITICAL FIX: PyMuPDF Rect uses (x0, y0, x1, y1) where y0 is from TOP!
+            # Extension sends y from bottom, so we need to flip it!
+            y_from_top = page_height - y - height
             
-            # Create rectangle (PyMuPDF uses bottom-left origin)
             x0 = x
-            y0 = y
+            y0 = y_from_top  # Convert from bottom to top!
             x1 = x + width
-            y1 = y + height
+            y1 = y_from_top + height
             
+            print(f"  🔄 Convert Y from bottom to top:")
+            print(f"     Received: y={y} (from bottom)")
+            print(f"     Converted: y={y_from_top:.1f} (from top)")
             print(f"  📍 Rectangle: ({x0:.1f}, {y0:.1f}, {x1:.1f}, {y1:.1f})")
             
             rect = fitz.Rect(x0, y0, x1, y1)
             
-            # Insert logo with keep_proportion=False to use EXACT dimensions
+            # Insert logo with exact dimensions
             try:
                 page.insert_image(
                     rect,
                     stream=replace_logo_bytes,
-                    keep_proportion=False,  # Use EXACT rect dimensions!
+                    keep_proportion=False,  # Use exact rect dimensions
                     overlay=True
                 )
-                print(f"  ✅ Logo inserted with exact dimensions!")
+                print(f"  ✅ Logo inserted successfully!")
                     
             except Exception as img_error:
                 print(f"  ❌ Error inserting image: {img_error}")
